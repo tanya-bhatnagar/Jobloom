@@ -6,14 +6,14 @@ import { UserButton, useClerk, useUser} from '@clerk/clerk-react';
 const Navbar = () => {
  const {openSignIn}= useClerk()
  const {user} = useUser()
-//  const navigate =useNavigate()
+ const navigate =useNavigate()
 
 
   return (
     <div  className='shadow py-4'>
       <div className='container px-4 2xl:px-20 mx-auto flex justify-between items-center'>
 
-      {/* <img onClick={()=>navigate('/')} src={logo_short} className="h-12 w-auto object-contain rounded-md shadow-[0_0_10px_rgba(13,27,76,0.5)] cursor-pointer" alt="Jobloom Logo" /> */}
+      <img onClick={()=>navigate('/')} src={logo_short} className="h-12 w-auto object-contain rounded-md shadow-[0_0_10px_rgba(13,27,76,0.5)] cursor-pointer" alt="Jobloom Logo" />
       {
         user
         ?<div className='flex items-center gap-3'>
