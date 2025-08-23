@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import logo_short from '../assets/logo-short.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserButton, useClerk, useUser} from '@clerk/clerk-react';
+import AppContext from '../context/AppContext';
 
 const Navbar = () => {
  const {openSignIn}= useClerk()
  const {user} = useUser()
  const navigate =useNavigate()
+ const {setShowRecruiterLogin} = useContext(AppContext)
 
 
   return (
@@ -24,7 +26,7 @@ const Navbar = () => {
         </div>
         :
         <div className='flex gap-4 max-sm:text-xs'>
-        <button className='text-grey-600'>Recruiter Login</button>
+        <button onClick={()=> setShowRecruiterLogin(true)} className='text-grey-600'>Recruiter Login</button>
         <button onClick={() =>openSignIn()} className='bg-blue-600 text-white px-6 sm:px-9 py-2 rounded-full cursor-pointer'>Login</button>
       </div>
       }
