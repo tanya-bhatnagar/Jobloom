@@ -36,27 +36,27 @@ const Applications = () => {
           }
         </div>
         <h2 className='text-xl font-semibold mb-4' >Job Applied</h2>
-        <table className='min-w-full bg-white border rounded-lg'>
+        <table className='min-w-full bg-white border border-gray-300 rounded-lg'>
           <thead>
             <tr>
-              <th className='py-3 px-4 border-b text-left'>Company</th>
-              <th className='py-3 px-4 border-b text-left'>Job Title</th>
-              <th className='py-3 px-4 border-b text-left max-sm:hidden'>Location</th>
-              <th className='py-3 px-4 border-b text-left'>Date</th>
-              <th className='py-3 px-4 border-b text-left'>Status</th>
+              <th className='py-3 px-4 border-b border-gray-300 text-left'>Company</th>
+              <th className='py-3 px-4 border-b border-gray-300 text-left'>Job Title</th>
+              <th className='py-3 px-4 border-b border-gray-300 text-left max-sm:hidden'>Location</th>
+              <th className='py-3 px-4 border-b border-gray-300 text-left'>Date</th>
+              <th className='py-3 px-4 border-b border-gray-300 text-left'>Status</th>
             </tr>
           </thead>
           <tbody>
             {jobsApplied.map((job,index)=> true ? (
               <tr>
-               <td className='py-3 px-4 flex items-center gap-2 border-b'>
+               <td className='py-3 px-4 flex items-center gap-2 border-b border-gray-300'>
                 <img className='w-8 h-8' src={job.logo} alt="" />
                 {job.company}
                </td>
-               <td className='py-2 px-4 border-b'>{job.title}</td>
-               <td className='py-2 px-4 border-b max-sm:hidden'>{job.location}</td>
-               <td className='py-2 px-4 border-b'>{moment(job.date).format('ll')}</td>
-               <td className='py-2 px-4 border-b'>
+               <td className='py-2 px-4 border-b border-gray-300'>{job.title}</td>
+               <td className='py-2 px-4 border-b border-gray-300 max-sm:hidden'>{job.location}</td>
+               <td className='py-2 px-4 border-b border-gray-300'>{moment(job.date).format('ll')}</td>
+               <td className='py-2 px-4 border-b border-gray-300'>
                 <span className={`${job.status === 'Accepted' ? 'bg-green-100' : job.status === 'Rejected' ? 'bg-red-100' : 'bg-blue-100' } px-4 py-1.5 rounded`}>
                    {job.status}
                 </span>
