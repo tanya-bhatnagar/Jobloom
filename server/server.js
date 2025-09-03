@@ -5,7 +5,8 @@ import 'dotenv/config'
 import connectionDB from './config/db.js'
 import * as Sentry from "@sentry/node";
 import { clerkWebhooks} from './controllers/webhooks.js'
-
+import companyRoutes from './routes/companyRoutes.js'
+import connectCloudinary from './config/cloudnary.js'
 
 
 //Initialize Express 
@@ -13,6 +14,7 @@ const app = express()
 
 //Connect to database
 await connectionDB()
+await connectCloudinary()
 
 //Middlewares
 app.use(cors())
@@ -24,6 +26,7 @@ app.get("/debug-sentry", function mainHandler(req, res) {
   throw new Error("My first Sentry error!");
 });
 app.post('/webhooks',clerkWebhooks)
+app.use('/api/company',companyRoutes)
 
 
 //Port
