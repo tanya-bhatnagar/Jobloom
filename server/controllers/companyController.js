@@ -4,6 +4,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import generateToken from "../utils/generateToken.js";
 import Job from '../models/Job.js'
 import { json } from "express";
+import JobApplication from "../models/jobApplication.js";
 
 //Register a new company
 export const registerComapany = async (req, res) => {
@@ -146,12 +147,17 @@ export const getComapanyPostedJobs = async (req, res) => {
 
         const jobs = await Job.find({ companyId })
 
-        // (ToDo) Adding No. of applicants info in data
+        // Adding No. of applicants info in data
 
-        res.json({ success: true, jobsData: jobs })
+        const jobData = await Promise.all(jobs.map(async (job) => {
+            const applicants = await JobApplication.find({ jobId: job._id })
+            return { ...job.toObject(), applicants: applicants.length }
+        }))
+
+        res.json({ success: true, jobsData: jobData })
 
     } catch (error) {
-        res.json({ success: true, message: error.message })
+        res.json({ success: false, message: error.message })
     }
 
 }

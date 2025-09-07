@@ -4,7 +4,6 @@ import User from "../models/User.js"
 import {v2 as cloudinary} from 'cloudinary'
 
 
-
 // Get user Data 
 export const getUserData = async(req,res)=>{
  
