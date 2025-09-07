@@ -38,7 +38,7 @@ export const AppContextProvider = (props) => {
 
             if (data.success) {
                 setJobs(data.jobs)
-                console.log(data.jobs);
+                console.log("✅ Jobs fetched:", data.jobs);
             } else {
                 toast.error(data.message)
             }
@@ -59,7 +59,7 @@ export const AppContextProvider = (props) => {
 
             if (data.success) {
                 setCompanyData(data.company)
-                console.log(data);
+                console.log("✅ Company data:", data);
             } else {
                 toast.error(data.message)
             }
@@ -119,9 +119,12 @@ export const AppContextProvider = (props) => {
         showRecruiterLogin, setShowRecruiterLogin,
         companyToken, setCompanyToken,
         companyData, setCompanyData,
+        backendUrl,
         userData, setUserData,
         userApplications, setUserApplications,
-        backendUrl
+        fetchUserData,
+        fetchJobs
+
     }
 
     return (
