@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     resume: { type: String },
-    image: { type: String , required: true}
+    //if u want that the only img is requiired so add recuired:true in this image field
+    image: { type: String }
 })
 
 const User = mongoose.model('User',userSchema)
