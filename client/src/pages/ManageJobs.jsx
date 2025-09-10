@@ -76,7 +76,10 @@ const ManageJobs = () => {
     
   },[companyToken])
 
-  return jobs ? jobs.length === 0 ? (<div></div>) :(
+  return jobs ? jobs.length === 0 ? (
+  <div className='flex items-center justify-center h-[70vh]'>
+    <p className='text-xl sm:text-2xl'>No Jobs Available or Posted</p>
+  </div>) :(
     <div className='container p-4 max-w-5xl'>
       <div className='overflow-x-auto'>
         <table className='min-w-full bg-white border border-gray-300 max-sm:text-sm'>
