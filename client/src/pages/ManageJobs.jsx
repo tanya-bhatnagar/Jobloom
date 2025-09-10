@@ -8,12 +8,13 @@ import AppContext from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
+import Loading from '../components/Loading'
 
 const ManageJobs = () => {
 
   const navigate = useNavigate()
 
-  const [jobs, setJobs] = useState([])
+  const [jobs, setJobs] = useState(false)
   const { backendUrl, companyToken } = useContext(AppContext)
 
   //function to fetch company job applications data 
@@ -75,14 +76,12 @@ const ManageJobs = () => {
     
   },[companyToken])
 
-  return (
+  return jobs ? jobs.length === 0 ? (<div></div>) :(
     <div className='container p-4 max-w-5xl'>
       <div className='overflow-x-auto'>
-    
         <table className='min-w-full bg-white border border-gray-300 max-sm:text-sm'>
           <thead>
             <tr>
-         
               <th className='py-2 px-4 border-b border-gray-300 text-left max-sm:hidden'>#</th>
               <th className='py-2 px-4 border-b border-gray-300 text-left'>Job Title</th>
               <th className='py-2 px-4 border-b border-gray-300 text-left max-sm:hidden'>Date</th>
@@ -112,7 +111,7 @@ const ManageJobs = () => {
         </div>
       </div>
     </div>
-  )
+  ) : <Loading/>
 }
 
 export default ManageJobs
