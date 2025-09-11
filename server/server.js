@@ -10,6 +10,8 @@ import connectCloudinary from './config/cloudnary.js'
 import JobRoutes from './routes/jobRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import {clerkMiddleware} from '@clerk/express'
+import aiRoutes from './routes/aiRoutes.js';
+
 
 
 //Initialize Express 
@@ -33,6 +35,9 @@ app.post('/webhooks',clerkWebhooks)
 app.use('/api/company',companyRoutes)
 app.use('/api/jobs',JobRoutes)
 app.use('/api/users',userRoutes)
+app.use("/api/ai", aiRoutes);
+console.log("GEMINI_API_KEY:", process.env.GEMINI_API_KEY);
+
 
 //Port
 const PORT = process.env.PORT || 8080
