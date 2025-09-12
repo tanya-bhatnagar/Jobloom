@@ -11,6 +11,8 @@ import JobRoutes from './routes/jobRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import {clerkMiddleware} from '@clerk/express'
 import aiRoutes from './routes/aiRoutes.js';
+import resumeRoutes from './routes/resumeRoutes.js';
+
 
 
 
@@ -36,6 +38,8 @@ app.use('/api/company',companyRoutes)
 app.use('/api/jobs',JobRoutes)
 app.use('/api/users',userRoutes)
 app.use("/api/ai", aiRoutes);
+app.use('/api/resume', resumeRoutes);
+
 console.log("GEMINI_API_KEY:", process.env.GEMINI_API_KEY);
 
 
