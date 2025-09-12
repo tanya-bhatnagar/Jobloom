@@ -19,7 +19,13 @@ const Navbar = () => {
       {
         user
         ?<div className='flex items-center gap-3'>
+          <Link to={'/resume-check'}>Resume Checker</Link> 
+              <p>|</p>
+           <Link to={'/resume-templates'}>Resume Templates</Link> 
+              <p>|</p>
             <Link to={'applications'}>Applied Jobs</Link>
+            <p>|</p>
+             <Link to={'applications'}>Profile</Link>
             <p>|</p>
             <p className='max-sm:hidden '>Hi , {user.firstName+" "+user.lastName}</p>
             <UserButton />

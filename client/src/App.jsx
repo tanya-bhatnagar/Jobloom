@@ -1,7 +1,7 @@
 import './index.css'
 import React, { useContext } from 'react'
-import {Route,Routes} from 'react-router-dom'
-import  Home from './pages/Home'
+import { Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
 import ApplyJob from './pages/ApplyJob'
 import Applications from './pages/Applications'
 import RecruiterLogin from './components/RecruiterLogin'
@@ -11,41 +11,48 @@ import AddJob from './pages/AddJob'
 import ManageJobs from './pages/ManageJobs'
 import ViewApplications from './pages/ViewApplications'
 import 'quill/dist/quill.snow.css'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Chatbot from "./components/Chatbot";
+import ResumeTemplates from './pages/ResumeTemplates'
+import ResumeChecker from './components/ResumeChecker'
 
 
-const App = () =>{
- 
-  const {showRecruiterLogin, companyToken} = useContext(AppContext)
+const App = () => {
+
+  const { showRecruiterLogin, companyToken } = useContext(AppContext)
 
   return (
-     <div>
-     { showRecruiterLogin && <RecruiterLogin />}
+    <div>
+      {showRecruiterLogin && <RecruiterLogin />}
       <ToastContainer />
-    <Routes>
+      <Routes>
 
-      <Route path='/' element={<Home/>} />
-      <Route path='/apply-job/:id' element={<ApplyJob />}/>
-       <Route path='/apply-job/:id/applications' element={<Applications />} /> 
-      <Route path='/applications' element={<Applications />}/>
-      <Route path='/dashboard' element={<Dashboard />}>
-      {
-      companyToken ? <>
+        <Route path='/' element={<Home />} />
+        <Route path='/apply-job/:id' element={<ApplyJob />} />
+        <Route path='/apply-job/:id/applications' element={<Applications />} />
+        <Route path="/resume-templates" element={<ResumeTemplates />} />
+        <Route path="/resume-templates/applications" element={<Applications />} />
+        <Route path="/resume-check" element={<ResumeChecker />} />
+        <Route path="/resume-check/applications" element={<Applications />} />
 
-       <Route path='add-job' element={<AddJob />}/>
-      <Route path='manage-jobs' element={<ManageJobs />}/>
-      <Route path='view-applications' element={<ViewApplications />}/>
-      </>: null
-      }
-     
+        <Route path='/applications' element={<Applications />} />
+        <Route path='/dashboard' element={<Dashboard />}>
+          {
+            companyToken ? <>
 
-      </Route>
-    </Routes>
-    <Chatbot />
-     </div>
-   
+              <Route path='add-job' element={<AddJob />} />
+              <Route path='manage-jobs' element={<ManageJobs />} />
+              <Route path='view-applications' element={<ViewApplications />} />
+            </> : null
+          }
+
+
+        </Route>
+      </Routes>
+      <Chatbot />
+    </div>
+
   )
 }
 
