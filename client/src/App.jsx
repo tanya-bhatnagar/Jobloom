@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Chatbot from "./components/Chatbot";
 import ResumeTemplates from './pages/ResumeTemplates'
 import ResumeChecker from './components/ResumeChecker'
+import InterviewPreparation from './components/InterviewPreparation'
 
 
 const App = () => {
@@ -35,6 +36,8 @@ const App = () => {
         <Route path="/resume-templates/applications" element={<Applications />} />
         <Route path="/resume-check" element={<ResumeChecker />} />
         <Route path="/resume-check/applications" element={<Applications />} />
+        <Route path="/prep-tips" element={<InterviewPreparation />} />
+        <Route path="/prep-tips/applications" element={<Applications />} />
 
         <Route path='/applications' element={<Applications />} />
         <Route path='/dashboard' element={<Dashboard />}>
