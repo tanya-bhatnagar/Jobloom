@@ -91,10 +91,10 @@ const InterviewPreparation = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading interview tips...</p>
+                    <p className="text-gray-600 text-sm sm:text-base">Loading interview tips...</p>
                 </div>
             </div>
         );
@@ -104,52 +104,39 @@ const InterviewPreparation = () => {
         <div className="min-h-screen bg-gray-50">
             <Navbar />
 
-            <div className="py-8 px-4 max-w-6xl mx-auto">
+            <div className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
                 <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">Interview Preparation Guide</h1>
-                    <p className="text-xl text-gray-600">Master your next job interview with our comprehensive preparation guide</p>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">Interview Preparation Guide</h1>
+                    <p className="text-base sm:text-lg md:text-xl text-gray-600">Master your next job interview with our comprehensive preparation guide</p>
                 </div>
-                <div className="flex flex-wrap justify-center gap-4 mb-8">
-                    <a
-                        href="https://www.geeksforgeeks.org/interview-questions/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
-                    >
-                        GeeksforGeeks Questions
+
+                {/* External Links */}
+                <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
+                    <a href="https://www.geeksforgeeks.org/interview-questions/" target="_blank" rel="noopener noreferrer"
+                        className="px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition text-sm sm:text-base">
+                        GeeksforGeeks
                     </a>
-                    <a
-                        href="https://www.glassdoor.co.in/Interview/index.htm"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition"
-                    >
-                        Glassdoor Questions
+                    <a href="https://www.glassdoor.co.in/Interview/index.htm" target="_blank" rel="noopener noreferrer"
+                        className="px-4 sm:px-6 py-2 sm:py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition text-sm sm:text-base">
+                        Glassdoor
                     </a>
-                    <a
-                        href="https://in.indeed.com/career-advice/interviewing/top-interview-questions-and-answers"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition"
-                    >
+                    <a href="https://in.indeed.com/career-advice/interviewing/top-interview-questions-and-answers" target="_blank" rel="noopener noreferrer"
+                        className="px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition text-sm sm:text-base">
                         Indeed Q&A
                     </a>
-                    <a
-                        href="https://prepinsta.com/interview-preparation/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-3 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 transition"
-                    >
-                        PrepInsta Guide
+                    <a href="https://prepinsta.com/interview-preparation/" target="_blank" rel="noopener noreferrer"
+                        className="px-4 sm:px-6 py-2 sm:py-3 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 transition text-sm sm:text-base">
+                        PrepInsta
                     </a>
                 </div>
 
-                <div className="flex flex-wrap justify-center mb-8 bg-white rounded-lg shadow-sm p-2">
+                {/* Tabs */}
+                <div className="flex overflow-x-auto justify-start sm:justify-center mb-6 bg-white rounded-lg shadow-sm p-2 gap-2">
                     {['questions', 'tips', 'questions-to-ask'].map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`px-8 py-4 rounded-lg font-semibold transition-all text-lg ${activeTab === tab
+                            className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition-all text-sm sm:text-base whitespace-nowrap ${activeTab === tab
                                 ? 'bg-blue-600 text-white shadow-md'
                                 : 'text-gray-600 hover:bg-gray-100'
                                 }`}
@@ -161,42 +148,27 @@ const InterviewPreparation = () => {
                     ))}
                 </div>
 
-                <div className="bg-white rounded-xl shadow-lg p-8">
+                {/* Content */}
+                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8">
                     {activeTab === 'questions' && (
                         <div id="common-questions">
-                            <h2 className="text-4xl font-bold text-gray-900 mb-8">Common Interview Questions</h2>
-                            <div className="space-y-10">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6">Common Interview Questions</h2>
+                            <div className="space-y-6 sm:space-y-10">
                                 {questionsData.map((category, categoryIndex) => (
-                                    <div key={categoryIndex} className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border-l-8 border-blue-500">
-                                        <div className="flex items-center mb-6">
-                                            <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">
+                                    <div key={categoryIndex} className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-4 sm:p-6 md:p-8 border-l-8 border-blue-500">
+                                        <div className="flex items-center mb-4 sm:mb-6">
+                                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg sm:text-xl mr-3 sm:mr-4">
                                                 {categoryIndex + 1}
                                             </div>
-                                            <h3 className="text-3xl font-bold text-gray-800">{category.category}</h3>
+                                            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">{category.category}</h3>
                                         </div>
-                                        <div className="grid gap-8">
+                                        <div className="grid gap-6 sm:gap-8">
                                             {category.questions.map((item, index) => (
-                                                <div key={index} className="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-                                                    <div className="flex items-start gap-4">
-                                                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 mt-1">
-                                                            Q{index + 1}
-                                                        </div>
-                                                        <div className="flex-1">
-                                                            <h4 className="text-xl font-bold text-gray-900 mb-4 leading-relaxed">
-                                                                {item.question}
-                                                            </h4>
-                                                            <div className="bg-gradient-to-r from-green-50 to-blue-50 border-l-4 border-green-400 p-6 rounded-lg">
-                                                                <div className="flex items-start gap-3">
-                                                                    <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                                                                        💡
-                                                                    </div>
-                                                                    <div>
-                                                                        <p className="text-green-800 font-semibold mb-2">Expert Tip:</p>
-                                                                        <p className="text-gray-700 leading-relaxed">{item.tip}</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                <div key={index} className="bg-white rounded-xl p-4 sm:p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
+                                                    <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 leading-relaxed">{item.question}</h4>
+                                                    <div className="bg-gradient-to-r from-green-50 to-blue-50 border-l-4 border-green-400 p-4 sm:p-6 rounded-lg">
+                                                        <p className="text-green-800 font-semibold mb-1 sm:mb-2">💡 Expert Tip:</p>
+                                                        <p className="text-gray-700 text-sm sm:text-base leading-relaxed">{item.tip}</p>
                                                     </div>
                                                 </div>
                                             ))}
@@ -209,15 +181,15 @@ const InterviewPreparation = () => {
 
                     {activeTab === 'tips' && (
                         <div>
-                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Interview Tips & Best Practices</h2>
-                            <div className="space-y-8">
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Interview Tips & Best Practices</h2>
+                            <div className="space-y-6 sm:space-y-8">
                                 {interviewTips.map((section, index) => (
-                                    <div key={index} className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg p-6">
-                                        <h3 className="text-2xl font-semibold text-gray-900 mb-4">{section.title}</h3>
-                                        <ul className="space-y-3">
+                                    <div key={index} className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg p-4 sm:p-6">
+                                        <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 mb-4">{section.title}</h3>
+                                        <ul className="space-y-2 sm:space-y-3">
                                             {section.tips.map((tip, tipIndex) => (
-                                                <li key={tipIndex} className="flex items-start">
-                                                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                                <li key={tipIndex} className="flex items-start text-sm sm:text-base">
+                                                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-2 flex-shrink-0"></div>
                                                     <span className="text-gray-700">{tip}</span>
                                                 </li>
                                             ))}
@@ -230,37 +202,34 @@ const InterviewPreparation = () => {
 
                     {activeTab === 'questions-to-ask' && (
                         <div>
-                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Smart Questions to Ask Interviewers</h2>
-                            <p className="text-lg text-gray-600 mb-8">
-                                Asking thoughtful questions shows genuine interest and helps you evaluate the company.
-                            </p>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Smart Questions to Ask Interviewers</h2>
+                            <p className="text-base sm:text-lg text-gray-600 mb-6">Asking thoughtful questions shows genuine interest and helps you evaluate the company.</p>
 
-                            <div className="grid md:grid-cols-2 gap-4 mb-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-8">
                                 {questionsToAsk.map((question, index) => (
-                                    <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                                        <p className="text-gray-800 font-medium">{question}</p>
+                                    <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow">
+                                        <p className="text-gray-800 font-medium text-sm sm:text-base">{question}</p>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="space-y-6">
-                                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-                                    <h4 className="text-lg font-semibold text-red-800 mb-3">Questions to Avoid:</h4>
-                                    <ul className="space-y-2 text-red-700">
-                                        <li> "What does your company do?" (Shows lack of research)</li>
-                                        <li> "How much vacation time do I get?" (Save for after job offer)</li>
-                                        <li> "Can I work from home?" (Ask about work arrangements tactfully)</li>
-                                        <li> "How quickly can I get promoted?" (Sounds impatient)</li>
-                                    </ul>
-                                </div>
+                            <div className="bg-red-50 border border-red-200 rounded-lg p-4 sm:p-6">
+                                <h4 className="text-base sm:text-lg font-semibold text-red-800 mb-2 sm:mb-3">Questions to Avoid:</h4>
+                                <ul className="space-y-1 sm:space-y-2 text-red-700 text-sm sm:text-base">
+                                    <li>"What does your company do?" (Shows lack of research)</li>
+                                    <li>"How much vacation time do I get?" (Save for after job offer)</li>
+                                    <li>"Can I work from home?" (Ask about work arrangements tactfully)</li>
+                                    <li>"How quickly can I get promoted?" (Sounds impatient)</li>
+                                </ul>
                             </div>
                         </div>
                     )}
                 </div>
 
-                <div className="text-center mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white">
-                    <h3 className="text-2xl font-bold mb-4">Ready to Ace Your Interview? 🚀</h3>
-                    <p className="text-xl mb-6">Practice makes perfect. Use these tips to boost your confidence!</p>
+                {/* Footer */}
+                <div className="text-center mt-10 sm:mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 sm:p-8 text-white">
+                    <h3 className="text-xl sm:text-2xl font-bold mb-3">Ready to Ace Your Interview? 🚀</h3>
+                    <p className="text-base sm:text-lg mb-4">Practice makes perfect. Use these tips to boost your confidence!</p>
                 </div>
             </div>
         </div>
