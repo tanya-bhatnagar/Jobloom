@@ -4,9 +4,9 @@ import { v2 as cloudinary } from 'cloudinary'
 import generateToken from "../utils/generateToken.js";
 import Job from '../models/Job.js'
 import { json } from "express";
-import JobApplication from "../models/jobApplication.js";
+import JobApplication from "../models/JobApplication.js";
 
-//Register a new company
+//Register a new companyde
 export const registerComapany = async (req, res) => {
     const { name, email, password } = req.body
     const imageFile = req.file;
