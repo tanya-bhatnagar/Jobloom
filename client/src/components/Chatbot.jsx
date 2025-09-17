@@ -24,7 +24,7 @@ const Chatbot = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: input }),
-      });
+      })
 
       const data = await res.json();
       const botMessage = { role: "bot", text: data.reply };
