@@ -25,18 +25,18 @@ const JobListing = () => {
     )
   }
 
-  useEffect(()=>{
-    const matchesCategory = job => selectedCategories.length ===0 || selectedCategories.includes(job.category)
-    const matchesLocation = job => selectedLocations.length ===0 || selectedLocations.includes(job.location)
+  useEffect(() => {
+    const matchesCategory = job => selectedCategories.length === 0 || selectedCategories.includes(job.category)
+    const matchesLocation = job => selectedLocations.length === 0 || selectedLocations.includes(job.location)
     const matchesTitle = job => searchFilter.title === "" || job.title.toLowerCase().includes(searchFilter.title.toLowerCase())
-    const matchesSearchLocation = job => searchFilter.location ==="" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase())
+    const matchesSearchLocation = job => searchFilter.location === "" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase())
     const newFilteredJobs = jobs.slice().reverse().filter(
       job => matchesCategory(job) && matchesLocation(job) && matchesTitle(job) && matchesSearchLocation(job)
     )
     setFilteredJobs(newFilteredJobs)
     setCurrentPage(1)
 
-  },[jobs, selectedCategories, selectedLocations, searchFilter])
+  }, [jobs, selectedCategories, selectedLocations, searchFilter])
 
   return (
     <div className='container 2xl:px-20 max-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8'>
@@ -89,23 +89,26 @@ const JobListing = () => {
         </div>
 
         {/* {Location filter} */}
+
         <div className={showFilter ? " " : 'max-lg:hidden'}>
-          <h4 className='font-medium text-lg py-4 pt-14'>Seacrh by Location</h4>
+          <h4 className='font-medium text-lg py-4 pt-14'>Search by Location</h4>
           <ul className='space-y-4 text-gray-600'>
             {
-              JobLocations.map((loaction, index) => (
+              JobLocations.map((location, index) => (
                 <li className='flex gap-3 items-center' key={index}>
-                  <input className='scale-125'
+                  <input
+                    className='scale-125'
                     type="checkbox"
                     onChange={() => handleLocationChange(location)}
-                    checked={selectedLocations.includes(location)} />
-                  {loaction}
-
+                    checked={selectedLocations.includes(location)}
+                  />
+                  {location}
                 </li>
               ))
             }
           </ul>
         </div>
+
       </div>
 
       {/* {job listings} */}
