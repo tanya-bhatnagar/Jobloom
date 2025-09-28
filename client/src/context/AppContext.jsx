@@ -69,6 +69,31 @@ export const AppContextProvider = (props) => {
         }
     }
 
+     // NEW FUNCTION - Create or get user in MongoDB
+    const createOrGetUser = async () => {
+        try {
+            const token = await getToken();
+            const { data } = await axios.post(backendUrl + '/api/users/create-or-get-user', 
+                {
+                    name: user.fullName || `${user.firstName} ${user.lastName}`,
+                    email: user.primaryEmailAddress?.emailAddress,
+                    image: user.imageUrl
+                },
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            
+            if (data.success) {
+                console.log(" User created/found in MongoDB:", data.user);
+                setUserData(data.user) // Set user data immediately
+            } else {
+                console.error(" Error creating user:", data.message)
+            }
+        } catch (error) {
+            console.error(" Error in createOrGetUser:", error.message)
+        }
+    }
+
+
     //Function to fetch user data
     const fetchUserData = async () => {
         try {
@@ -124,10 +149,19 @@ export const AppContextProvider = (props) => {
 
     }, [companyToken])
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     if (user) {
+    //         fetchUserData()
+    //         fetchUserApplications()
+    //     }
+    // }, [user])
+     useEffect(() => {
         if (user) {
-            fetchUserData()
-            fetchUserApplications()
+            // First create/get user in MongoDB, then fetch other data
+            createOrGetUser().then(() => {
+                // After user is created/found, fetch applications
+                fetchUserApplications()
+            })
         }
     }, [user])
 
@@ -144,7 +178,8 @@ export const AppContextProvider = (props) => {
         userApplications, setUserApplications,
         fetchUserData,
         fetchJobs,
-        fetchUserApplications
+        fetchUserApplications,
+        createOrGetUser
 
     }
 
