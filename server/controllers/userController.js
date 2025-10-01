@@ -8,15 +8,14 @@ export const createOrGetUser = async (req, res) => {
         const { userId } = req.auth
         
         // Check if user already exists
-        let user = await User.findById(userId) // userId hi _id hai tumhare model mein
+        let user = await User.findById(userId) 
         
         if (!user) {
-            // Agar user nhi hai toh create karo - ye data frontend se aayega
             const { name, email, image } = req.body
             
             user = await User.create({
-                _id: userId, // Clerk userId ko _id banao
-                name: name || 'User', // Default name if not provided
+                _id: userId, 
+                name: name || 'User',
                 email: email,
                 image: image || ''
             })
