@@ -5,7 +5,7 @@ import {v2 as cloudinary} from 'cloudinary'
 
 export const createOrGetUser = async (req, res) => {
     try {
-        const { userId } = req.auth()
+        const { userId } = req.auth
         
         // Check if user already exists
         let user = await User.findById(userId) // userId hi _id hai tumhare model mein
@@ -33,7 +33,7 @@ export const createOrGetUser = async (req, res) => {
 // Get user Data 
 export const getUserData = async(req,res)=>{
  
-  const { userId } = req.auth()
+  const { userId } = req.auth
 
     try {
         
@@ -55,7 +55,7 @@ export const getUserData = async(req,res)=>{
 export const applyForjob = async(req,res)=>{
 
     const { jobId } = req.body
-   const { userId } = req.auth()
+   const { userId } = req.auth
     try {
 
          const user = await User.findById(userId)
@@ -95,7 +95,7 @@ export const getUserJobApplications = async(req,res)=>{
 
     try {
 
-       const { userId } = req.auth()
+       const { userId } = req.auth
           const user = await User.findById(userId)
         if (!user) {
             return res.json({success:false, message:'User not found'})
@@ -126,7 +126,7 @@ export const updateUserResume = async(req,res)=>{
 
     try {
 
-      const { userId } = req.auth()
+      const { userId } = req.auth
 
         const resumeFile = req.file
 

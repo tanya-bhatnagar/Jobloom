@@ -13,6 +13,7 @@ import {clerkMiddleware} from '@clerk/express'
 import aiRoutes from './routes/aiRoutes.js';
 import resumeRoutes from './routes/resumeRoutes.js';
 
+
 //Initialize Express 
 const app = express()
 
@@ -21,7 +22,11 @@ await connectionDB()
 await connectCloudinary()
 
 //Middlewares
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+    credentials: true,
+    origin: true 
+}))
 app.use(express.json())
 app.use(clerkMiddleware())
 

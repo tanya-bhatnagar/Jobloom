@@ -1,24 +1,25 @@
 import express from 'express'
 import { applyForjob, getUserData, getUserJobApplications, updateUserResume, createOrGetUser } from '../controllers/userController.js'
 import upload from '../config/multer.js'
-import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
+import {requireAuth } from '@clerk/express';
+
 
 const router = express.Router()
 
 //Get user Data
-router.get('/user',ClerkExpressRequireAuth({}),getUserData)
+router.get('/user', requireAuth(),getUserData)
 
 //Apply for a job
-router.post('/apply',ClerkExpressRequireAuth({}),applyForjob)
+router.post('/apply', requireAuth(),applyForjob)
 
 //Get applied jobs data
-router.get('/applications',ClerkExpressRequireAuth({}),getUserJobApplications)
+router.get('/applications', requireAuth(),getUserJobApplications)
 
 //Update user profile (resume)
-router.post('/update-resume',ClerkExpressRequireAuth({}),upload.single('resume'),updateUserResume)
+router.post('/update-resume', requireAuth(),upload.single('resume'),updateUserResume)
 
 // routes file mein ye line add karo
-router.post('/create-or-get-user', ClerkExpressRequireAuth({}),createOrGetUser)
+router.post('/create-or-get-user',  requireAuth(),createOrGetUser)
 
 
 export default router
