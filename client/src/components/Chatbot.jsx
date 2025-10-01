@@ -7,6 +7,7 @@ const Chatbot = () => {
   ]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -20,11 +21,14 @@ const Chatbot = () => {
     setInput("");
 
     try {
-      const res = await fetch("/api/ai/ask", {
+       const res = await fetch(`${BACKEND_URL}/api/ai/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: input }),
       })
+        if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
 
       const data = await res.json();
       const botMessage = { role: "bot", text: data.reply };
