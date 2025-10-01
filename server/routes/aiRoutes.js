@@ -58,8 +58,9 @@ router.post("/ask", async (req, res) => {
 
 Please provide a systematic and comprehensive response following the guidelines above.`;
 
+    // FIX: Use correct model name without -latest suffix
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-latest",
+      model: "gemini-1.5-flash",
       generationConfig: {
         temperature: 0.7,
         topK: 40,
@@ -69,12 +70,12 @@ Please provide a systematic and comprehensive response following the guidelines 
     });
 
     const result = await model.generateContent(enhancedPrompt);
-    const text = await result.response.text();
+    const text = result.response.text();
 
     res.json({
       reply: text,
       metadata: {
-        model: "gemini-1.5-flash-latest",
+        model: "gemini-1.5-flash",
         timestamp: new Date().toISOString(),
         prompt_length: prompt.length,
         response_length: text.length,
@@ -85,14 +86,14 @@ Please provide a systematic and comprehensive response following the guidelines 
   } catch (error) {
     console.error("Gemini API Error:", error);
 
-    if (error.message.includes('API key')) {
+    if (error.message?.includes('API key')) {
       return res.status(401).json({
         error: "API Authentication Error",
         message: "Please check your Gemini API key"
       });
     }
 
-    if (error.message.includes('quota')) {
+    if (error.message?.includes('quota')) {
       return res.status(429).json({
         error: "API Quota Exceeded",
         message: "API usage limit reached. Please try again later."
@@ -101,7 +102,7 @@ Please provide a systematic and comprehensive response following the guidelines 
 
     res.status(500).json({
       error: "Internal Server Error",
-      message: error.message,
+      message: error.message || "Unknown error occurred",
       timestamp: new Date().toISOString()
     });
   }
@@ -123,8 +124,9 @@ router.post("/ask-custom", async (req, res) => {
       });
     }
 
+    // FIX: Use correct model name
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-latest",
+      model: "gemini-1.5-flash",
       generationConfig: {
         temperature: temperature,
         topK: 40,
@@ -139,7 +141,7 @@ router.post("/ask-custom", async (req, res) => {
 **User Query:** ${prompt}`;
 
     const result = await model.generateContent(enhancedPrompt);
-    const text = await result.response.text();
+    const text = result.response.text();
 
     res.json({
       reply: text,
@@ -154,7 +156,7 @@ router.post("/ask-custom", async (req, res) => {
     console.error("Gemini API Error:", error);
     res.status(500).json({
       error: "Internal Server Error",
-      message: error.message
+      message: error.message || "Unknown error occurred"
     });
   }
 });
