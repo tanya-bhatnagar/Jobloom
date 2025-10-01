@@ -4,8 +4,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useUser, useAuth } from "@clerk/clerk-react";
 
-
-
 const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
@@ -69,7 +67,6 @@ export const AppContextProvider = (props) => {
         }
     }
 
-     // NEW FUNCTION - Create or get user in MongoDB
     const createOrGetUser = async () => {
         try {
             const token = await getToken();
