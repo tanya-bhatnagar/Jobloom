@@ -170,6 +170,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const router = express.Router();
+
+// Validate API key on startup
+if (!process.env.GEMINI_API_KEY) {
+  console.error('❌ GEMINI_API_KEY is not set in environment variables');
+}
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const SYSTEM_PROMPT = `You are an AI assistant designed to provide systematic, well-structured, and comprehensive answers. Follow these guidelines for every response:
@@ -204,6 +210,41 @@ const SYSTEM_PROMPT = `You are an AI assistant designed to provide systematic, w
 
 Now, please respond to the following user query following these systematic guidelines:`;
 
+// Helper function to get working model
+async function getWorkingModel() {
+  const modelOptions = [
+    "gemini-pro",
+    "gemini-1.5-pro",
+    "gemini-1.5-flash-001",
+    "gemini-1.5-flash-002"
+  ];
+
+  for (const modelName of modelOptions) {
+    try {
+      console.log(`Trying model: ${modelName}`);
+      const model = genAI.getGenerativeModel({
+        model: modelName,
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 2048,
+        },
+      });
+      
+      // Test the model with a simple query
+      await model.generateContent("test");
+      console.log(`✅ Working model found: ${modelName}`);
+      return { model, modelName };
+    } catch (error) {
+      console.log(`❌ Model ${modelName} failed: ${error.message}`);
+      continue;
+    }
+  }
+  
+  throw new Error('No working Gemini model found. Please check your API key and quota.');
+}
+
 router.post("/ask", async (req, res) => {
   try {
     const { prompt, context = "", language = "english" } = req.body;
@@ -223,16 +264,8 @@ router.post("/ask", async (req, res) => {
 
 Please provide a systematic and comprehensive response following the guidelines above.`;
 
-    // FIXED: Use correct model name - gemini-1.5-flash (without -latest)
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      generationConfig: {
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 2048,
-      },
-    });
+    // Get a working model
+    const { model, modelName } = await getWorkingModel();
 
     const result = await model.generateContent(enhancedPrompt);
     const text = result.response.text();
@@ -240,7 +273,7 @@ Please provide a systematic and comprehensive response following the guidelines 
     res.json({
       reply: text,
       metadata: {
-        model: "gemini-1.5-flash",
+        model: modelName,
         timestamp: new Date().toISOString(),
         prompt_length: prompt.length,
         response_length: text.length,
@@ -254,22 +287,24 @@ Please provide a systematic and comprehensive response following the guidelines 
     if (error.message?.includes('API key')) {
       return res.status(401).json({
         error: "API Authentication Error",
-        message: "Please check your Gemini API key"
+        message: "Invalid or missing Gemini API key. Please check your .env file.",
+        hint: "Get your API key from https://aistudio.google.com/app/apikey"
       });
     }
 
-    if (error.message?.includes('quota')) {
+    if (error.message?.includes('quota') || error.message?.includes('429')) {
       return res.status(429).json({
         error: "API Quota Exceeded",
-        message: "API usage limit reached. Please try again later."
+        message: "API usage limit reached. Please try again later or upgrade your quota."
       });
     }
 
-    if (error.message?.includes('models/')) {
+    if (error.message?.includes('models/') || error.message?.includes('404')) {
       return res.status(400).json({
-        error: "Model Not Found",
-        message: "The specified model is not available. Using gemini-1.5-flash.",
-        details: error.message
+        error: "Model Not Available",
+        message: "The Gemini model is not accessible. This could be due to region restrictions or API configuration.",
+        details: error.message,
+        hint: "Check if your API key has access to Gemini models at https://aistudio.google.com"
       });
     }
 
@@ -297,16 +332,7 @@ router.post("/ask-custom", async (req, res) => {
       });
     }
 
-    // FIXED: Use correct model name - gemini-1.5-flash (without -latest)
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      generationConfig: {
-        temperature: temperature,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: maxTokens,
-      },
-    });
+    const { model, modelName } = await getWorkingModel();
 
     const enhancedPrompt = `${systemPrompt}
 
@@ -319,6 +345,7 @@ router.post("/ask-custom", async (req, res) => {
     res.json({
       reply: text,
       config: {
+        model: modelName,
         temperature,
         maxTokens,
         customSystemPrompt: systemPrompt !== SYSTEM_PROMPT
@@ -330,6 +357,37 @@ router.post("/ask-custom", async (req, res) => {
     res.status(500).json({
       error: "Internal Server Error",
       message: error.message || "Unknown error occurred"
+    });
+  }
+});
+
+// Test endpoint
+router.get("/test", async (req, res) => {
+  try {
+    const hasApiKey = !!process.env.GEMINI_API_KEY;
+    
+    if (!hasApiKey) {
+      return res.json({
+        success: false,
+        message: "GEMINI_API_KEY not found in environment variables"
+      });
+    }
+
+    const { model, modelName } = await getWorkingModel();
+    const result = await model.generateContent("Say 'API is working!'");
+    const text = result.response.text();
+
+    res.json({
+      success: true,
+      message: "Gemini API is working correctly!",
+      model: modelName,
+      testResponse: text
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Gemini API test failed",
+      error: error.message
     });
   }
 });
