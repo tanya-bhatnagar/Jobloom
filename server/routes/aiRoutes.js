@@ -60,7 +60,7 @@ Please provide a systematic and comprehensive response following the guidelines 
 
     // FIX: Use correct model name without -latest suffix
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-latest",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         topK: 40,
@@ -75,7 +75,7 @@ Please provide a systematic and comprehensive response following the guidelines 
     res.json({
       reply: text,
       metadata: {
-        model: "gemini-1.5-flash-latest",
+        model: "gemini-2.5-pro",
         timestamp: new Date().toISOString(),
         prompt_length: prompt.length,
         response_length: text.length,
@@ -126,7 +126,7 @@ router.post("/ask-custom", async (req, res) => {
 
     // FIX: Use correct model name
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-latest",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: temperature,
         topK: 40,

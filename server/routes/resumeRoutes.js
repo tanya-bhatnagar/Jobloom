@@ -57,7 +57,7 @@ const extractTextFromPDF = async (buffer) => {
 
 const analyzeResumeWithAI = async (resumeText) => {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
         
         const prompt = `
         You are an expert ATS resume analyst. Analyze the following resume content and provide feedback in the EXACT format requested below.
@@ -137,7 +137,7 @@ Your resume has been processed successfully. The content shows relevant professi
 
 const analyzeResumeDirectly = async (fileName) => {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
         
         const fileNameLower = fileName.toLowerCase();
         let industryHint = '';
